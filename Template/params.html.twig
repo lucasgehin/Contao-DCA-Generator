@@ -1,0 +1,39 @@
+{% extends 'main.html.twig' %}
+{% block main_content %}
+<h1>Edition des fichiers de configuration</h1>
+{% if success %}
+<div class="alert alert-success">
+    <p>
+        {{success}}
+    </p>
+</div>
+{% endif %}
+<div class="alert alert-info">
+    <p>
+        Les attributs <code>title</code> et <code>value</code> sont obligatoires. <br>
+        Si le champ est un select, l'attribut <code>options</code> est obligatoire.
+    </p>
+</div>
+<div class="alert alert-warning">
+    <p>
+        Vous pouvez annuler toutes les modifications faites et restaurer les paramètres initiaux. <br>
+        <button type="button" class="btn btn-danger" id="resetConfig">Réinitialiser tous les paramètres</button>
+    </p>
+</div>
+<form action="#" method="post">
+    <h2>fields.json</h2>
+    <textarea name="fields" id="" class="form-control" rows="20">
+        {{fields}}
+    </textarea>
+
+    <h2>eval.json</h2>
+    <textarea name="eval" id="" class="form-control" rows="20">
+        {{eval}}
+    </textarea>
+    <br>
+    <input type="submit" class="btn btn-primary" value="Valider">
+</form>
+
+
+<script src="assets/js/config.js"></script>
+{% endblock %}

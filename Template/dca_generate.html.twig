@@ -1,0 +1,13 @@
+{% extends 'main.html.twig' %}
+{% block main_content %}
+<h1>/dca/{{name}}.php</h1>
+<pre>
+    {{dca}}
+</pre>
+
+<h1>/languages/fr/{{name}}.php</h1>
+<pre>
+    {{fr}}
+</pre>
+<a href="dca"><button class="btn btn-primary">Générer un nouveau DCA</button></a>
+{% endblock %}

@@ -1,0 +1,57 @@
+{
+    "fields" : [    
+        {
+            "title" : "label",
+            "value" : "string"
+        },
+        {
+            "title" : "exclude",
+            "value" : "boolean",
+            "default" : false
+        },
+        {
+            "title" : "search",
+            "value" : "boolean",
+            "default" : false
+        },
+        {
+            "title" : "sorting",
+            "value" : "boolean",
+            "default" : false
+        },
+        {
+            "title" : "filter",
+            "value" : "boolean",
+            "default" : false
+        },
+        {
+            "title" : "length",
+            "value" : "int"
+        },
+        {
+            "title" : "inputType",
+            "value" : "select",
+            "options" : "text, password, textarea, select, checkbox, radio, radioTable, imageSize, inputUnit, trbl, chmod, pageTree, fileTree, tableWizard, timePeriod, listWizard, optionWizard, moduleWizard, checkboxWizard"
+        },
+        {
+            "title" : "foreignKey",
+            "value" : "string"
+        },
+        {
+            "title" : "sql",
+            "value" : "text"
+        },
+        {
+            "title" : "options",
+            "value" : "array"
+        },
+        {
+            "title" : "options_callback",
+            "value" : "array"
+        },
+        {
+            "title" : "relation",
+            "value" : "array"
+        }
+    ]
+}

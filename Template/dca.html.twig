@@ -1,0 +1,467 @@
+{% extends 'main.html.twig' %}
+{% block main_content %}
+<form method="post" action="#" id="dca_form">
+    <div role="tabpanel">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#config" aria-controls="config" role="tab" data-toggle="tab">Config</a></li>
+            <li role="presentation"><a href="#list" aria-controls="list" role="tab" data-toggle="tab">List</a></li>
+            <li role="presentation"><a href="#palettes" aria-controls="palettes" role="tab" data-toggle="tab">Palettes</a></li>
+            <li role="presentation"><a href="#fields" aria-controls="fields" role="tab" data-toggle="tab">Fields</a></li>
+            <li class="pull-right"><input type="submit" class="btn btn-primary" value="Générer DCA"></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="config">
+                <div class="form-group">
+                    <label for=""><big>Nom de la table</big></label>
+                    <input type="text" name="name" class="form-control input-lg" placeholder="Nom de la table" value="tl_" required>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="">Data container</label>
+                    <select name="datacontainer" id="" class="form-control">
+                        <option value="Table">Table</option>
+                        <option value="File">File</option>
+                        <option value="Folder">Folder</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="versionning" checked> Activer versionning
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="switchtoedit" > Activer sauvegarder et éditer
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="closed" > Fermer les enregistrements dans la table
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="noteditable"> Table non modifiable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="notdeletable" > Enregistrements de la table non supprimables
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="">Table parent</label>
+                    <input type="text" class="form-control" name="ptable" placeholder="ptable">
+                </div>
+                <div class="form-group">
+                    <label for="">Table enfant</label>
+                    <input type="text" class="form-control" name="ctable" placeholder="ctable">
+                </div>
+                <div class="form-group">
+                    <label for="">Clés</label>
+                    <div id="group-cles">
+                        <div data-id="1" style="margin-bottom:5px;" class="row">
+                            <div class="col-xs-6">
+                                <input class="form-control" type="text" id="cle_champ_1" name="cle_champ_1" placeholder="Nom du champ">
+                            </div>
+                            <div class="col-xs-4">
+                                <select name="cle_valeur_1" id="" class="form-control">
+                                    <option value="primary">Primary</option>
+                                    <option value="index">Index</option>
+                                    <option value="unique">Unique</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-2" style="text-align:right">
+                                <button type="button" class="btn btn-default" onclick="return add_cle(1)"><i class="fa fa-files-o" title="Dupliquer"></i></button>
+                                <button type="button" class="btn btn-default" onclick="return add_cle()"><i class="fa fa-plus" title="Ajouter une autre clé"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="nb_cles" value="1" id="nb_cles"/>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="list">
+                <h3>Sorting</h3>
+                <div class="form-group">
+                    <label for="">Mode</label>
+                    <select class="form-control" name="mode" id="">
+                        <option value="0">0 - Les enregistrements ne sont pas triés</option>
+                        <option value="1">1 - Les enregistrements sont triés selon un champ déterminé</option>
+                        <option value="2">2 - Les enregistrements sont triés selon un champs sélectionnable</option>
+                        <option value="3">3 - Les enregistrements sont triés par la table parente</option>
+                        <option value="4">4 - Affiche les enregistrements enfants d'une table parente</option>
+                        <option value="5">5 - Les enregistrements sont présentés en arborescence</option>
+                        <option value="6">6 - Affiche les enregistrements enfants dans une structure en arborescence</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Flag</label>
+                    <select class="form-control" name="flag" id="">
+                        <option value="1">1 - Tri ascendant sur la première lettre </option>
+                        <option value="2">2 - Tri descendant sur la première lettre </option>
+                        <option value="3">3 - Tri ascendant sur les deux premières lettres </option>
+                        <option value="4">4 - Tri descendant sur les deux premières lettres </option>
+                        <option value="5">5 - Tri ascendant par jour </option>
+                        <option value="6">6 - Tri descendant par jour </option>
+                        <option value="7">7 - Tri ascendant par mois </option>
+                        <option value="8">8 - Tri descendant par mois </option>
+                        <option value="9">9 - Tri ascendant par année </option>
+                        <option value="10">10 - Tri descendant par année </option>
+                        <option value="11">11 - Tri ascendant </option>
+                        <option value="12">12 - Tri descendant</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">PanelLayout <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Options séparées par des virgules (= espace) ou des points virgules (= nouvelle ligne)"></i></label>
+                    <input type="text" class="form-control" name="panellayout" value="sort,filter;search,limit">
+                </div>
+                <div class="form-group">
+                    <label for="">Fields</label>
+                    <input type="text" class="form-control" name="sorting_fields" placeholder="Fields (séparés par des virgules)">
+                </div>
+
+                <hr>
+                <h3>Label</h3>
+                <div class="form-group">
+                    <label for="">Fields</label>
+                    <input type="text" class="form-control" name="label_fields" placeholder="Champs du label (séparés par des virgules)">
+                </div>
+                <div class="form-group">
+                    <label for="">Format <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Exemple pour deux champs : %s <span>[%s]</span>"></i></label>
+                    <input type="text" class="form-control" name="label_format" placeholder="Format (exemple : %s [%s])">
+                </div>
+                <hr>
+                <h3>Global operations</h3>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="globaloperation_all" checked> all
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h3>Operations</h3>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="operation_edit" checked> edit
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="operation_copy" checked> copy
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="operation_delete" checked> delete
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="operation_show" checked> show
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="palettes">
+                <div id="group-legends">
+                    <div data-id="0">
+                        <div class="form-group">
+                            <label for="">Legend</label>
+                            <input type="text" class="form-control" name="palette[0][legend]" placeholder="Label de la legend (exemple : title_legend)">
+                            <label for="">Legend name</label>
+                            <input type="text" class="form-control" name="palette[0][legend_name]" placeholder="Nom de la legend (exemple : Titre)">
+                        </div>
+                        <div class="form-group col-xs-offset-2" >
+                            <label for="">Champs</label>
+                            <br>
+                            <div id="group-legends-0-champs">
+                                <div data-id="0">
+                                    <div class="row" style="margin-bottom:5px;">
+                                        <div class="col-xs-10">
+                                            <input type="text" class="form-control" name="palette[0][fields][0][label]" placeholder="Label du champ (exemple : title)">
+                                            <input type="text" class="form-control" name="palette[0][fields][0][titre]" placeholder="Titre du champ (exemple : Titre)">
+                                        </div>
+                                        <div class="col-xs-2" style="text-align:right">   
+                                            <button type="button"  class="btn btn-default" onclick="return add_palette_champ(0)"><i class="fa fa-plus" title="Ajouter un autre champ"></i></button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    
+                </div>
+                <button type="button" class="btn btn-default" onclick="return add_palette_legend()"><i class="fa fa-plus"></i> Ajouter legend</button>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="fields">
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="fields_id" checked> ID
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="fields_tstamp" checked> tstamp
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div id="group-fields">
+                    
+                </div>
+                <button type="button" class="btn btn-default" onclick="return add_field()"><i class="fa fa-plus"></i> Ajouter field</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    
+
+
+</form>
+
+
+
+<!--templates-->
+<div id="template_cles" style="display: none">
+    <div data-id="__index__" style="margin-bottom:5px;" class="row">
+        <div class="col-xs-6">
+            <input class="form-control" type="text" id="cle_champ___index__" name="cle_champ___index__" placeholder="Nom du champ" value="__value__">
+        </div>
+        <div class="col-xs-4">
+            <select name="cle_valeur___index__" id="" class="form-control">
+                <option value="primary">Primary</option>
+                <option value="index">Index</option>
+                <option value="unique">Unique</option>
+            </select>
+        </div>
+        <div class="col-xs-2" style="text-align:right">
+            <button type="button"  class="btn btn-default" onclick="return remove_cle(__index__)"  style="color:#FF0000"><i class="fa fa-remove" title="Supprimer la ligne"></i></button>
+            <button type="button"  class="btn btn-default" onclick="return add_cle(__index__)"><i class="fa fa-files-o" title="Dupliquer"></i></button>
+            <button type="button"  class="btn btn-default" onclick="return add_cle()"><i class="fa fa-plus" title="Ajouter une autre clé"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="template_legend" style="display:none">
+    <div data-id="__index__">
+        <div class="form-group">
+            <label for="">Legend</label>
+            <input type="text" class="form-control" name="palette[__index__][legend]" placeholder="Label de la legend (exemple : title_legend)">
+            <label for="">Legend name</label>
+            <input type="text" class="form-control" name="palette[__index__][legend_name]" placeholder="Nom de la legend (exemple : Titre)">    
+        </div>
+        <div class="form-group col-xs-offset-2" >
+            <label for="">Champs</label>
+            <br>
+            <div id="group-legends-__index__-champs">
+                <div data-id="0">
+                    <div class="row" style="margin-bottom:5px;">
+                        <div class="col-xs-10">
+                            <input type="text" class="form-control" name="palette[__index__][fields][0][label]" placeholder="Label du champ (exemple : title)">
+                            <input type="text" class="form-control" name="palette[__index__][fields][0][titre]" placeholder="Titre du champ (exemple : Titre)">
+                        </div>
+                        <div class="col-xs-2" style="text-align:right">   
+                            <button type="button"  class="btn btn-default" onclick="return add_palette_champ(__index__)"><i class="fa fa-plus" title="Ajouter un autre champ"></i></button>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div id="template_legend_champ" style="display:none">
+    <div data-id="__index__">
+        <div class="row" style="margin-bottom:5px;">
+            <div class="col-xs-10">
+                <input type="text" class="form-control" name="palette[__legend__][fields][__index__][label]" placeholder="Label du champ (exemple : title)">
+                <input type="text" class="form-control" name="palette[__legend__][fields][__index__][titre]" placeholder="Titre du champ (exemple : Titre)">
+            </div>
+            <div class="col-xs-2" style="text-align:right">
+                <button type="button"  class="btn btn-default" onclick="return remove_palette_champ(__legend__, __index__)" style="color:#FF0000"><i class="fa fa-remove" title="Supprimer le champ"></i></button>
+                <button type="button"  class="btn btn-default" onclick="return add_palette_champ(__legend__)"><i class="fa fa-plus" title="Ajouter un autre champ"></i></button>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div id="template_fields" style="display:none">
+    <div data-id="__index__">
+        <div class="form-group">
+            <label for="">Field</label>
+            <input type="text" class="form-control" name="field[__index__][name]" placeholder="Titre du field" required>
+        </div>
+        <div class="form-group col-xs-offset-2" >
+            <h4>Champs</h4>
+            <div id="group-fields-__index__-option">
+                 <div data-id="0">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label for="">Nom de l'option</label>
+                                <select class="select-fields form-control" id="select-fields-__index__-options-0" name="field[__index__][options][0][champ]" data-id="0">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label for="">Valeur</label>
+                                <div id="value-fields-__index__-options-0">
+                                    <input type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2" style="text-align:right;">     
+                            <button type="button" style="margin-top:25px" class="btn btn-default" onclick="return add_field_option(__index__)"><i class="fa fa-plus" title="Ajouter une autre option"></i></button>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <h4>Eval</h4>
+            <button type="button" class="btn btn-default btn-xs" onclick="return add_eval(__index__)" id="add_eval___index__"><i class="fa fa-plus"></i> Ajouter champ eval</button>
+            <input type="hidden" name="field[__index__][eval][exist]" value="false" id="hidden_eval___index__">
+            <div id="eval___index__" style="display:none">
+                <div data-id="0">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label for="">Nom de l'option eval</label>
+                                <select class="select-fields form-control" id="select-fields-__index__-eval-0" name="field[__index__][eval][0][champ]" data-id="0">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label for="">Valeur</label>
+                                <div id="value-fields-__index__-eval-0">
+                                    <input type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2" style="text-align:right;">
+                            <button type="button" style="margin-top:25px" class="btn btn-default" onclick="return add_eval_option(__index__)"><i class="fa fa-plus" title="Ajouter une autre option"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button style="display:none;" type="button" class="btn btn-default btn-xs" onclick="return remove_eval(__index__)" id="remove_eval___index__"><i style="color:#ff0000" class="fa fa-remove"></i> Supprimer champ eval</button>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div id="template_fields_option" style="display:none">
+    <div data-id="__index__">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="">Nom de l'option</label>
+                    <select class="select-fields form-control" id="select-fields-__field__-options-__index__" name="field[__field__][options][__index__][champ]" data-id="__index__">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="">Valeur</label>
+                    <div id="value-fields-__field__-options-__index__">
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2" style="text-align:right;">   
+                <button type="button" style="margin-top:25px;color:#FF0000" class="btn btn-default" onclick="return remove_field_option(__field__, __index__)"><i class="fa fa-remove" title="Supprimer le champ"></i></button>
+                <button type="button" style="margin-top:25px" class="btn btn-default" onclick="return add_field_option(__field__)"><i class="fa fa-plus" title="Ajouter une autre option"></i></button>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div id="template_eval_option" style="display:none">
+    <div data-id="__index__">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="">Nom de l'option eval</label>
+                    <select class="select-fields form-control" id="select-fields-__field__-eval-__index__" name="field[__field__][eval][__index__][champ]" data-id="__index__">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="form-group">
+                    <label for="">Valeur</label>
+                    <div id="value-fields-__field__-eval-__index__">
+                        <input type="text" class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2" style="text-align:right;">
+                <button type="button" style="margin-top:25px;color:#FF0000" class="btn btn-default" onclick="return remove_eval_option(__field__, __index__)"><i class="fa fa-remove" title="Supprimer le champ"></i></button>
+                <button type="button" style="margin-top:25px" class="btn btn-default" onclick="return add_eval_option(__field__)"><i class="fa fa-plus" title="Ajouter une autre option"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/dca.js"></script>
+{% endblock %}

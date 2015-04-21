@@ -1,0 +1,29 @@
+{
+    "fields" : [ 
+        {
+            "title" : "helpwizard",
+            "value" : "boolean"
+        },
+        {
+            "title" : "mandatory",
+            "value" : "boolean"
+        },
+        {
+            "title" : "maxlength",
+            "value" : "int"
+        },
+        {
+            "title" : "minlength",
+            "value" : "int"
+        },
+        {
+            "title" : "fallback",
+            "value" : "boolean"
+        },
+        {
+            "title" : "rgxp",
+            "value" : "select",
+            "options" : "alias, alnum, alpha, date, datim, digit, email, emails, extnd, folderalias, friendly, phone, prcnt, url, time"
+        }
+    ]
+}
